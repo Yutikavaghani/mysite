@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog | Add Post</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static '/admin/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static '/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static '/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static '/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static '/admin/dist/css/adminlte.min.css' %}">
+  
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  {% include "header.html" %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <!-- <h5>Login User Name: {{data}}</h5> -->
+            <h1 class="m-0">Add Blog</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Blog Data</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Our Post Data</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+
+                            {% if mydata.feature_img %}
+                            <div class="form-group">
+                              <label for="exampleInputFile">Current Feature Image</label><br>
+                              {% if mydata.feature_img %}
+                                  <img src="{{ mydata.feature_img.url }}" alt="Current Feature Image">
+                              {% else %}
+                                  <p>No image uploaded.</p>
+                              {% endif %}
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label>Post Feature Image:</label>
+                                <input type="file" class="form-control" name="feature_img">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Post Heading</label>
+                                <input type="text" class="form-control" id="" placeholder="Enter heading" name="post_title" value="{{mydata.post_title}}">
+                            </div>
+                            <div class="form-group">
+                              <label>Author Name</label>
+                              <input type="text" class="form-control" id="" placeholder="Author name" name="auth_name" value="{{mydata.auth_name}}">
+                          </div>
+                            <div class="form-group post-meta">
+                                <label>Post Meta</label>
+                                <input type="date" class="form-control" name="post_date" value="{{mydata.post_date|date:'Y-m-d'}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCategories">Select Categories</label><br>
+                                {% for category in categories %}
+                                <input type="checkbox" name="categories" value="{{ category.id }}"
+                                    {% if category in form.instance.categories.all %}checked{% endif %}> {{ category.ourcat }}<br>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label>Post Description</label>
+                                <textarea class="form-control" placeholder="Enter Description" name="post_description">{{mydata.post_description}}</textarea>
+                            </div>
+                            <div class="form-group">
+                              <label>About Content</label>
+                              <textarea class="form-control" placeholder="About Description" name="about_des">{{mydata.about_des}}</textarea>
+                          </div>
+                            
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static '/admin/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static '/admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{% static '/admin/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static '/admin/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static '/admin/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static '/admin/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static '/admin/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static '/admin/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static '/admin/dist/js/demo.js' %}"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+
+</body>
+</html>
